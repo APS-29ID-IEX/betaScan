@@ -35,7 +35,9 @@ class BetaScan(Display):
 		
 		mouseExtent = 480
 		
-		chosenY = (1.0 - (mouseY / mouseExtent *(yMax-yMin) + yMin) / yExtent) * (motorScanStartPos - motorScanStopPos) + motorScanStopPos
+		chosenY = (1.0 - (mouseY / mouseExtent * (yMax - 
+					yMin) + yMin) / yExtent) * (motorScanStartPos - 
+					motorScanStopPos) + motorScanStopPos
 	
 		mouse_txt = "Mouse click at:"
 		mouse_txt += " ({}, {})".format(self.coords[0], self.coords[1])
