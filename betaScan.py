@@ -12,7 +12,11 @@ class BetaScan(Display):
 	def __init__(self, parent=None, args=None):
 		super(BetaScan, self).__init__(parent=parent, args=args)
 		self.ui.imageView.mousePressEvent = self.get_coord
-
+		
+		# TODO
+		# override mousePressEvent for motor go button to use send_value of 
+		# PyDMLineEdit for motor
+		
 	def ui_filename(self):
 		# Point to our UI file
 		return 'betaScan.ui'
