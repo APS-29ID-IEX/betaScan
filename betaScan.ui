@@ -110,68 +110,24 @@
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="ReadbacksLayout" stretch="0">
-       <property name="spacing">
-        <number>0</number>
+      <widget class="QLabel" name="label_3">
+       <property name="enabled">
+        <bool>true</bool>
        </property>
-       <item>
-        <widget class="QFrame" name="verticalFrame">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QFrame#verticalFrame{
-	border: 1px solid #FF17365D;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-}</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>4</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_3">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>700</width>
-              <height>29</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLabel {
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>700</width>
+         <height>29</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
         qproperty-alignment: AlignCenter;
 	border: 1px solid #FF17365D;
 	border-top-left-radius: 15px;
@@ -183,214 +139,59 @@
         font-size: 14px;
 }
 </string>
+       </property>
+       <property name="text">
+        <string>Scan Monitor</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="ReadbacksLayout" stretch="0">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame_2">
+         <property name="styleSheet">
+          <string notr="true">QFrame#frame{
+	border: 1px solid #FF17365D;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="PyDMEmbeddedDisplay" name="EmbeddedScan">
+            <property name="minimumSize">
+             <size>
+              <width>700</width>
+              <height>120</height>
+             </size>
             </property>
-            <property name="text">
-             <string>Scan Monitor</string>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="macros" stdset="0">
+             <string>{&quot;SCAN&quot;:&quot;PelmeniNDSA:scan1&quot;, &quot;IOC&quot;:&quot;PelmeniNDSA&quot;}</string>
+            </property>
+            <property name="filename" stdset="0">
+             <string>scan_control_inline.ui</string>
             </property>
            </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="PyDMLabel" name="ScanMSG">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>225</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.SMSG</string>
-                </property>
-                <property name="displayFormat" stdset="0">
-                 <enum>PyDMLabel::Decimal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PyDMPushButton" name="PyDMPushButton">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: red;</string>
-                </property>
-                <property name="text">
-                 <string>Start Scan</string>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.EXSC</string>
-                </property>
-                <property name="confirmMessage" stdset="0">
-                 <string/>
-                </property>
-                <property name="pressValue" stdset="0">
-                 <string>1</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="ScannedPts_Label">
-                <property name="text">
-                 <string>Scan Point:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PyDMLabel" name="ScannedPts">
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string>Scanned Points</string>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.CPT</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="Divisor">
-                <property name="text">
-                 <string>/</string>
-                </property>
-                <property name="scaledContents">
-                 <bool>false</bool>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PyDMLabel" name="TotalPts">
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string>Total Points</string>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.NPTS</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="ScanParms_Label">
-                <property name="font">
-                 <font>
-                  <family>Noto Sans Khmer UI</family>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Scan Parameters</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="ScanStartPos_Label">
-                <property name="text">
-                 <string>Start Position:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PyDMLabel" name="ScanStartPos">
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string>None</string>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.P1SP</string>
-                </property>
-                <property name="displayFormat" stdset="0">
-                 <enum>PyDMLabel::Decimal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="ScanStopPos_Label">
-                <property name="text">
-                 <string>End Position:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PyDMLabel" name="ScanStopPos">
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string>None</string>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.P1EP</string>
-                </property>
-                <property name="displayFormat" stdset="0">
-                 <enum>PyDMLabel::Decimal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="ScanStepSize_Label">
-                <property name="text">
-                 <string>Step Size:</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="PyDMLabel" name="ScanStepSize">
-                <property name="toolTip">
-                 <string/>
-                </property>
-                <property name="text">
-                 <string>None</string>
-                </property>
-                <property name="channel" stdset="0">
-                 <string>ca://PelmeniNDSA:scan1.P1SI</string>
-                </property>
-                <property name="displayFormat" stdset="0">
-                 <enum>PyDMLabel::Decimal</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
           </item>
          </layout>
         </widget>
@@ -457,7 +258,7 @@
            </widget>
           </item>
           <item>
-           <widget class="PyDMEmbeddedDisplay" name="EmbeddedControls">
+           <widget class="PyDMEmbeddedDisplay" name="EmbeddedMotor">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -559,11 +360,6 @@
    <class>PyDMImageView</class>
    <extends>QWidget</extends>
    <header>pydm.widgets.image</header>
-  </customwidget>
-  <customwidget>
-   <class>PyDMPushButton</class>
-   <extends>QPushButton</extends>
-   <header>pydm.widgets.pushbutton</header>
   </customwidget>
  </customwidgets>
  <resources/>
