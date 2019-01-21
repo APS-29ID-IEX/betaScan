@@ -183,6 +183,9 @@ color: black;</string>
            <property name="channel" stdset="0">
             <string>ca://${IOC}:AbortScans.PROC</string>
            </property>
+           <property name="pressValue" stdset="0">
+            <string>1</string>
+           </property>
           </widget>
          </item>
         </layout>

@@ -61,28 +61,31 @@
      <property name="verticalSpacing">
       <number>5</number>
      </property>
-     <item row="0" column="7">
-      <widget class="PyDMLineEdit" name="motorStepSize">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+     <item row="0" column="8">
+      <widget class="PyDMPushButton" name="PyDMPushButton_3">
        <property name="minimumSize">
         <size>
-         <width>50</width>
-         <height>0</height>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
         </size>
        </property>
        <property name="toolTip">
         <string/>
        </property>
-       <property name="channel" stdset="0">
-        <string>ca://${MOTOR}.TWV</string>
+       <property name="text">
+        <string>&gt;</string>
        </property>
-       <property name="displayFormat" stdset="0">
-        <enum>PyDMLineEdit::Decimal</enum>
+       <property name="channel" stdset="0">
+        <string>ca://${MOTOR}.TWF</string>
+       </property>
+       <property name="pressValue" stdset="0">
+        <string>1</string>
        </property>
       </widget>
      </item>
@@ -133,31 +136,28 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="8">
-      <widget class="PyDMPushButton" name="PyDMPushButton_3">
+     <item row="0" column="7">
+      <widget class="PyDMLineEdit" name="motorStepSize">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
-         <width>24</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>24</width>
-         <height>24</height>
+         <width>50</width>
+         <height>0</height>
         </size>
        </property>
        <property name="toolTip">
         <string/>
        </property>
-       <property name="text">
-        <string>&gt;</string>
-       </property>
        <property name="channel" stdset="0">
-        <string>ca://${MOTOR}.TWF</string>
+        <string>ca://${MOTOR}.TWV</string>
        </property>
-       <property name="pressValue" stdset="0">
-        <string>1</string>
+       <property name="displayFormat" stdset="0">
+        <enum>PyDMLineEdit::Decimal</enum>
        </property>
       </widget>
      </item>
@@ -209,6 +209,31 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="5">
+      <widget class="PyDMPushButton" name="PyDMPushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: red;</string>
+       </property>
+       <property name="text">
+        <string>Stop</string>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${MOTOR}.STOP</string>
+       </property>
+       <property name="pressValue" stdset="0">
+        <string>1</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="6">
       <widget class="PyDMPushButton" name="PyDMPushButton_2">
        <property name="minimumSize">
@@ -231,31 +256,6 @@
        </property>
        <property name="channel" stdset="0">
         <string>ca://${MOTOR}.TWR</string>
-       </property>
-       <property name="pressValue" stdset="0">
-        <string>1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="PyDMPushButton" name="PyDMPushButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: red;</string>
-       </property>
-       <property name="text">
-        <string>Stop</string>
-       </property>
-       <property name="channel" stdset="0">
-        <string>ca://${MOTOR}.STOP</string>
        </property>
        <property name="pressValue" stdset="0">
         <string>1</string>
@@ -316,18 +316,12 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="PyDMPushButton" name="motorMove">
-       <property name="toolTip">
-        <string/>
-       </property>
+      <widget class="QPushButton" name="motorMove">
        <property name="styleSheet">
         <string notr="true">background-color: green;</string>
        </property>
        <property name="text">
         <string>Move</string>
-       </property>
-       <property name="channel" stdset="0">
-        <string>ca://${MOTOR}.SPMG</string>
        </property>
       </widget>
      </item>

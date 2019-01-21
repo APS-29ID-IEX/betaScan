@@ -2,7 +2,7 @@ import time
 from os import path
 from pydm import Display
 from scipy.ndimage.measurements import maximum_position
-from qtpy.QtWidgets import QWidget, QGridLayout
+from qtpy.QtWidgets import QWidget, QGridLayout, QPushButton
 from pydm.widgets.line_edit import PyDMLineEdit
 from pydm.widgets.label import PyDMLabel
 import math
@@ -12,10 +12,13 @@ class BetaScan(Display):
 	def __init__(self, parent=None, args=None):
 		super(BetaScan, self).__init__(parent=parent, args=args)
 		self.ui.imageView.mousePressEvent = self.get_coord
+
+		self.motorRead = self.ui.EmbeddedMotor.findChild(PyDMLabel,"motorPosRead")
+		self.motorSet = self.ui.EmbeddedMotor.findChild(PyDMLineEdit,"motorPosSet")
+	
+		self.motorGo = self.ui.EmbeddedMotor.findChild(QPushButton,"motorMove")
+		self.motorGo.mousePressEvent = self.move_motor
 		
-		# TODO
-		# override mousePressEvent for motor go button to use send_value of 
-		# PyDMLineEdit for motor
 		
 	def ui_filename(self):
 		# Point to our UI file
@@ -24,6 +27,9 @@ class BetaScan(Display):
 	def ui_filepath(self):
 		# Return the full path to the UI file
 		return path.join(path.dirname(path.realpath(__file__)), self.ui_filename())
+
+	def move_motor(self, event):
+		self.motorSet.send_value()
 
 	def get_coord(self, event):
         # Check that mouse-click is in image
@@ -43,11 +49,8 @@ class BetaScan(Display):
 		motorScanStepSize = float(scanStepSize.text())
 		motorScanStartPos = float(scanStartPos.text())
 		motorScanStopPos = float(scanStopPos.text())
-		
-		motorControl = self.ui.EmbeddedMotor.findChild(PyDMLineEdit,"motorPosSet")
-		motorReadBack = self.ui.EmbeddedMotor.findChild(PyDMLabel,"motorPosRead")
-		
-		motorCurrPos = float(motorReadBack.text())
+					
+		motorCurrPos = float(self.motorRead.text())
 		
 		mouseExtent = 480 ## would prefer to get this number programmatically
 		
@@ -60,7 +63,7 @@ class BetaScan(Display):
 		if ((chosenY <= max(limits)) and (chosenY >= min(limits))):
 				steps = (math.floor((chosenY - motorScanStartPos)/motorScanStepSize))
 				chosenY_disc = steps * motorScanStepSize + motorScanStartPos
-				motorControl.setText(str(chosenY_disc))
+				self.motorSet.setText(str(chosenY_disc))
 		
 		mouse_txt = "Mouse click at:"
 		mouse_txt += " ({}, {})".format(self.coords[0], self.coords[1])
