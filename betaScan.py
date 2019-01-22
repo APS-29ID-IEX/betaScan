@@ -6,6 +6,7 @@ from qtpy.QtWidgets import QWidget, QGridLayout, QPushButton
 from pydm.widgets.line_edit import PyDMLineEdit
 from pydm.widgets.label import PyDMLabel
 import math
+import epics
 
 class BetaScan(Display):
 
@@ -18,6 +19,8 @@ class BetaScan(Display):
 	
 		self.motorGo = self.ui.EmbeddedMotor.findChild(QPushButton,"motorMove")
 		self.motorGo.mousePressEvent = self.move_motor
+		
+		self.imageYSize = epics.PV('PelmeniNDSA:cam1:ArraySize1_RBV')
 		
 		
 	def ui_filename(self):
@@ -35,7 +38,11 @@ class BetaScan(Display):
         # Check that mouse-click is in image
 		self.coords = [event.pos().x(), event.pos().y()]
 		mouseY = float(event.pos().y())
-		yExtent = float(self.ui.ImageYSize.text())
+		# Need data from ca://PelmeniNDSA:cam1:ArraySize1_RBV since ImageYSize
+		# PyDMLabel has been removed:
+		#yExtent = float(self.ui.ImageYSize.text())
+		yExtent = self.imageYSize.get()
+
 
 		# Image boundaries returned as [[xmin, xmax], [ymin, ymax]]
 		view = self.ui.imageView.getView()
@@ -72,6 +79,3 @@ class BetaScan(Display):
 
 		yPos_txt = "Mouse click converted to y-position of (clicked value, actual position): \n"
 		yPos_txt += " {}, {}".format(chosenY, motorCurrPos)
-
-		self.ui.MouseLabel.setText(mouse_txt)
-		self.ui.TargetLabel.setText(yPos_txt) 
