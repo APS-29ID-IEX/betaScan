@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>742</width>
-    <height>829</height>
+    <width>724</width>
+    <height>847</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -57,6 +57,12 @@
          <height>480</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string/>
        </property>
@@ -95,10 +101,10 @@
         <string>ca://PelmeniNDSA:image1:ArrayData</string>
        </property>
        <property name="widthChannel" stdset="0">
-        <string>ca://PelmeniNDSA:image1:ArraySize0_RBV</string>
+        <string>ca://PelmeniNDSA:cam1:ArraySize0</string>
        </property>
        <property name="maxRedrawRate" stdset="0">
-        <number>30</number>
+        <number>10</number>
        </property>
       </widget>
      </item>
@@ -141,12 +147,12 @@
 </string>
        </property>
        <property name="text">
-        <string>Scan Monitor</string>
+        <string>Scan Controls</string>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="ReadbacksLayout" stretch="0">
+      <layout class="QVBoxLayout" name="ScanLayout" stretch="0">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -231,12 +237,12 @@
 </string>
        </property>
        <property name="text">
-        <string>Controls</string>
+        <string>Motor Controls</string>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="ControlsLayout">
+      <layout class="QVBoxLayout" name="MotorLayout">
        <property name="spacing">
         <number>0</number>
        </property>
@@ -310,6 +316,117 @@
             </property>
             <property name="filename" stdset="0">
              <string>motor_inline.ui</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+        qproperty-alignment: AlignCenter;
+	border: 1px solid #FF17365D;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: #FF17365D;
+	padding: 5px 0px;
+	color: rgb(255, 255, 255);
+	max-height: 25px;
+        font-size: 14px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>HV Controls</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="HVLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame_3">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QFrame#frame{
+	border: 1px solid #FF17365D;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="PyDMEmbeddedDisplay" name="EmbeddedHV">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>700</width>
+              <height>42</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="macros" stdset="0">
+             <string>{&quot;HV&quot;:&quot;PelmeniDet:ROI1&quot;}</string>
+            </property>
+            <property name="filename" stdset="0">
+             <string>hv_inline.ui</string>
             </property>
            </widget>
           </item>
