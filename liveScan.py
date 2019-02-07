@@ -14,10 +14,10 @@ class LiveScan(Display):
 
 	def __init__(self, parent=None, args=None):
 		super(LiveScan, self).__init__(parent=parent, args=args)
-		self.ui.BetaView.mousePressEvent = self.get_beta_coord
-		self.ui.BetaView.process_image = self.process_beta_image
-		self.ui.XYView.mousePressEvent = self.get_xy_coord
-		self.ui.XYView.process_image = self.process_xy_image
+#		self.ui.XYView.mousePressEvent = self.get_xy_coord
+#		self.ui.XYView.process_image = self.process_xy_image
+#		self.ui.BetaView.mousePressEvent = self.get_beta_coord
+#		self.ui.BetaView.process_image = self.process_beta_image
 		self.ui.liveViewButton.mousePressEvent = self.toggle_liveView
 
 		self.motor1DRead = self.ui.EmbeddedMotor.findChild(PyDMLabel,"motorPosRead")
@@ -50,6 +50,7 @@ class LiveScan(Display):
 		new_image = np.asarray(new_image)
 		slices = [slice(0, new_image.shape[0], 1/mag)]
 		idxs = (np.mgrid[slices]).astype('i')
+		print('Image zoomed: {}'.format(new_image[tuple(idxs)].shape))
 		return new_image[tuple(idxs)]
 
 	def toggle_liveView(self, event):
@@ -64,7 +65,6 @@ class LiveScan(Display):
 	def process_beta_image(self, new_image):
 		print(new_image.shape[0], new_image.shape[1])
 		yIters, xLength = new_image.shape
-		binSize = self.binYSize.get()
 		magnification = math.floor(self.imageHeight/float(yIters))
 		print(self.imageHeight, xLength, yIters, magnification)
 		

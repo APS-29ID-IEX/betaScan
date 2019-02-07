@@ -48,6 +48,7 @@ class BetaScan(Display):
 		return new_image[tuple(idxs)]
 		
 	def process_image(self, new_image):
+		print(new_image.shape[0], new_image.shape[1])
 		yIters, xLength = new_image.shape
 		binSize = self.binYSize.get()
 		magnification = math.floor(self.imageHeight/float(yIters))

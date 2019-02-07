@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
+    <width>712</width>
     <height>38</height>
    </rect>
   </property>
@@ -50,13 +50,13 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <property name="rightMargin">
-      <number>5</number>
+      <number>10</number>
      </property>
      <property name="bottomMargin">
       <number>5</number>
      </property>
      <property name="horizontalSpacing">
-      <number>10</number>
+      <number>2</number>
      </property>
      <property name="verticalSpacing">
       <number>5</number>
@@ -101,6 +101,12 @@
         <size>
          <width>75</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="toolTip">
@@ -148,6 +154,12 @@
         <size>
          <width>50</width>
          <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="toolTip">
@@ -217,6 +229,12 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string/>
        </property>
@@ -276,6 +294,12 @@
          <height>0</height>
         </size>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>90</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string/>
        </property>
@@ -291,13 +315,13 @@
       <widget class="PyDMRelatedDisplayButton" name="PyDMRelatedDisplayButton">
        <property name="minimumSize">
         <size>
-         <width>90</width>
+         <width>72</width>
          <height>24</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>90</width>
+         <width>75</width>
          <height>24</height>
         </size>
        </property>
@@ -317,6 +341,18 @@
      </item>
      <item row="0" column="1">
       <widget class="QPushButton" name="motorMove">
+       <property name="minimumSize">
+        <size>
+         <width>72</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color: green;</string>
        </property>
