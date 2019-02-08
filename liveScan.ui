@@ -661,7 +661,7 @@
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="PyDMEmbeddedDisplay" name="EmbeddedScan1DInner">
+                       <widget class="PyDMEmbeddedDisplay" name="EmbeddedScan2DInner">
                         <property name="toolTip">
                          <string/>
                         </property>
