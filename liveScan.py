@@ -14,10 +14,10 @@ class LiveScan(Display):
 
 	def __init__(self, parent=None, args=None):
 		super(LiveScan, self).__init__(parent=parent, args=args)
-#		self.ui.XYView.mousePressEvent = self.get_xy_coord
-#		self.ui.XYView.process_image = self.process_xy_image
-#		self.ui.BetaView.mousePressEvent = self.get_beta_coord
-#		self.ui.BetaView.process_image = self.process_beta_image
+		self.ui.XYView.mousePressEvent = self.get_xy_coord
+		self.ui.XYView.process_image = self.process_xy_image
+		self.ui.BetaView.mousePressEvent = self.get_beta_coord
+		self.ui.BetaView.process_image = self.process_beta_image
 		self.ui.liveViewButton.mousePressEvent = self.toggle_liveView
 
 		self.motor1DRead = self.ui.EmbeddedMotor.findChild(PyDMLabel,"motorPosRead")
@@ -44,7 +44,7 @@ class LiveScan(Display):
 		return path.join(path.dirname(path.realpath(__file__)), self.ui_filename())
 
 	def move_motor(self, event):
-		self.motorSet.send_value()
+		self.motor1DSet.send_value()
 
 	def zoomed_image(self, new_image, ys, mag):
 		new_image = np.asarray(new_image)
@@ -96,7 +96,7 @@ class LiveScan(Display):
 		motorScanStartPos = float(scanStartPos.text())
 		motorScanStopPos = float(scanStopPos.text())
 					
-		motorCurrPos = float(self.motorRead.text())
+		motorCurrPos = float(self.motor1DRead.text())
 		
 		
 #		mouseExtent = 480 ## would prefer to get this number programmatically
@@ -111,7 +111,7 @@ class LiveScan(Display):
 		if ((chosenY <= max(limits)) and (chosenY >= min(limits))):
 				steps = (math.floor((chosenY - motorScanStartPos)/motorScanStepSize))
 				chosenY_disc = steps * motorScanStepSize + motorScanStartPos
-				self.motorSet.setText(str(chosenY_disc))
+				self.motor1DSet.setText(str(chosenY_disc))
 			
 		print("****************************************************************")
 		print("mouseY, mouseExtent: {}, {}".format(mouseY, mouseExtent))

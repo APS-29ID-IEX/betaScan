@@ -35,7 +35,7 @@
          <item>
           <widget class="QTabWidget" name="scanTabs">
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="betaTab">
             <attribute name="title">
@@ -543,7 +543,7 @@
                          <string/>
                         </property>
                         <property name="macros" stdset="0">
-                         <string>{&quot;SCAN&quot;:&quot;PelmeniNDSA:scan2&quot;, &quot;IOC&quot;:&quot;PelmeniNDSA&quot;}</string>
+                         <string>{&quot;SCAN&quot;:&quot;PelmeniNDSA:scan3&quot;, &quot;IOC&quot;:&quot;PelmeniNDSA&quot;}</string>
                         </property>
                         <property name="filename" stdset="0">
                          <string>scan_1D_control_stack.ui</string>
@@ -666,7 +666,7 @@
                          <string/>
                         </property>
                         <property name="macros" stdset="0">
-                         <string>{&quot;SCAN&quot;:&quot;PelmeniNDSA:scan1&quot;, &quot;IOC&quot;:&quot;PelmeniNDSA&quot;}</string>
+                         <string>{&quot;SCAN&quot;:&quot;PelmeniNDSA:scan2&quot;, &quot;IOC&quot;:&quot;PelmeniNDSA&quot;}</string>
                         </property>
                         <property name="filename" stdset="0">
                          <string>scan_1D_control_stack.ui</string>
