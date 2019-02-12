@@ -7,6 +7,7 @@ from qtpy.QtWidgets import QWidget, QGridLayout, QPushButton
 from pydm.widgets.line_edit import PyDMLineEdit
 from pydm.widgets.label import PyDMLabel
 from pydm.widgets.embedded_display import PyDMEmbeddedDisplay
+from pydm.widgets.image import PyDMImageView
 import math
 import epics
 import numpy as np
@@ -25,13 +26,20 @@ class LiveScan(Display):
 		# Set up live view toggling
 		self.ui.liveViewButton.mousePressEvent = self.toggle_liveView
 
+		# Set up scans dictionary
+		self.scans = [{'ViewType': 'BetaView', 'Axis': 'Y', 'MotorControls': 'EmbeddedMotor',
+					   'Controls': 'EmbeddedScan1D', 'ZoomedSize': 1, 'AxisIndex': 0},
+					  {'ViewType': 'XYView', 'Axis': 'X', 'MotorControls': 'EmbeddedMotorInner',
+					   'Controls': 'EmbeddedScan2DInner', 'ZoomedSize': 1, 'AxisIndex': 1},
+					  {'ViewType': 'XYView', 'Axis': 'Y', 'MotorControls': 'EmbeddedMotorOuter',
+					   'Controls': 'EmbeddedScan2DOuter', 'ZoomedSize': 1, 'AxisIndex': 2} ] 
+
 		# Adding behavior to each motor's Move button so that values sent to 
 		# PyDMLineEdit programmatically can then be sent onto the motor when 
 		# the button is pressed
-		embeddedMotorDisplays = ['EmbeddedMotor', 'EmbeddedMotorOuter', 'EmbeddedMotorInner']
 		self.motorSetObj = []
-		for k, emd in enumerate(embeddedMotorDisplays):
-			embeddedDisplay = self.ui.findChild(PyDMEmbeddedDisplay,emd)
+		for k, emd in enumerate(self.scans):
+			embeddedDisplay = self.ui.findChild(PyDMEmbeddedDisplay,emd['MotorControls'])
 			self.motorSetObj.append(embeddedDisplay.findChild(PyDMLineEdit,"motorPosSet"))
 			motorGo = embeddedDisplay.findChild(QPushButton,"motorMove")
 			motorGo.clicked.connect(self.motorSetObj[k].send_value)
@@ -47,11 +55,6 @@ class LiveScan(Display):
 		self.camMode = epics.PV('PelmeniDet:cam1:ImageMode')
 		self.camAcq = epics.PV('PelmeniDet:cam1:Acquire')
 		self.camSetting = False
-		
-		# Set up scans dictionary
-		self.scans = [{"ViewType": 'BetaView', "Axis": 'Y', "Controls": 'EmbeddedScan1D', 'ZoomedSize': 1},
-					   "ViewType": 'XYView', "Axes": 'X', "Controls": 'EmbeddedScan2DInner', 'ZoomedSize': 1},
-					   "ViewType": 'XYView', "Axes": 'Y', "Controls": 'EmbeddedScan2DOuter', 'ZoomedSize': 1} ] 
 		
 	def ui_filename(self):
 		# Point to UI file
@@ -102,127 +105,35 @@ class LiveScan(Display):
 		disc_pos = steps * scanStepSize + scanStartPos
 		return disc_pos
 
-	def get_coord_beta(self, event):
-		# Get mouse click position in imageView widget
-		mouse_info = [float(event.pos().y()), self.ui.BetaView.height()]
-
-		# Image boundaries returned as [[xmin, xmax], [ymin, ymax]]
-		view = self.ui.BetaView.getView()
-		vRange = view.viewRange()
-		image_pos = [float(vRange[1][0]), float(vRange[1][1]), self.zoomedSize]
-		
-		# Get Scan information
-		scanStartPos = self.ui.EmbeddedScan1D.findChild(PyDMLabel,"ScanStartPosRead")
-		scanStopPos = self.ui.EmbeddedScan1D.findChild(PyDMLabel,"ScanStopPosRead")
-		scanStepSize = self.ui.EmbeddedScan1D.findChild(PyDMLabel,"ScanStepSizeRead")
-		
-		motorScanStepSize = float(scanStepSize.text())
-		motorScanStartPos = float(scanStartPos.text())
-		motorScanStopPos = float(scanStopPos.text())
-					
-		scan_info = [motorScanStartPos, motorScanStopPos, motorScanStepSize]
-
-		# Convert mouse click position into sample spatial position
-		chosenY = self.mouse_to_spacial(mouse_info, image_pos, scan_info)
-	
-		# Check that clicked position is within scan limits and if so, 
-		# "discretize" position so that it matches up with actual positions of
-		# sample during scan and then send to motor's set entry field			
-		limits = [motorScanStartPos, motorScanStopPos + motorScanStepSize]
-		if ((chosenY <= max(limits)) and (chosenY >= min(limits))):
-				chosenY_disc = self.discretize_pos(chosenY, motorScanStartPos, motorScanStepSize)
-				self.motorSetObj[0].setText(str(chosenY_disc))
-			
-#		print("****************************************************************")
-#		print("mouseY, mouseExtent: {}, {}".format(mouseY, mouseExtent))
-#		print("yMin, yMax, yExtent: {}, {}, {}".format(yMin, yMax, yExtent))
-#		print("motor scan start, stop, step: {}, {}, {}".format(motorScanStartPos, motorScanStopPos, motorScanStepSize))
-#		print("chosenY, limits: {}, {}".format(chosenY, limits))
-
-
-	def get_coord_xy(self, event):
-		# Get mouse click position in imageView widget
-		mouseX_info = [float(event.pos().x()), self.ui.XYView.width()]
-		mouseY_info = [float(event.pos().y()), self.ui.XYView.height()]
-
-		# Image boundaries returned as [[xmin, xmax], [ymin, ymax]]
-		view = self.ui.XYView.getView()				# <--- generalize here
-		vRange = view.viewRange()
-		imageX_pos = [float(vRange[0][0]), float(vRange[0][1]), self.xyZoomedSize[0]]
-		imageY_pos = [float(vRange[1][0]), float(vRange[1][1]), self.xyZoomedSize[1]]
-
-		# Get Scan information		
-		xScanStartPos = self.ui.EmbeddedScan2DInner.findChild(PyDMLabel,"ScanStartPosRead")		# <--- generalize here
-		xScanStopPos = self.ui.EmbeddedScan2DInner.findChild(PyDMLabel,"ScanStopPosRead")		# <--- generalize here
-		xScanStepSize = self.ui.EmbeddedScan2DInner.findChild(PyDMLabel,"ScanStepSizeRead")		# <--- generalize here
-	
-		xMotorScanStepSize = float(xScanStepSize.text())
-		xMotorScanStartPos = float(xScanStartPos.text())
-		xMotorScanStopPos = float(xScanStopPos.text())
-
-		yScanStartPos = self.ui.EmbeddedScan2DOuter.findChild(PyDMLabel,"ScanStartPosRead")		# <--- generalize here
-		yScanStopPos = self.ui.EmbeddedScan2DOuter.findChild(PyDMLabel,"ScanStopPosRead")		# <--- generalize here
-		yScanStepSize = self.ui.EmbeddedScan2DOuter.findChild(PyDMLabel,"ScanStepSizeRead")		# <--- generalize here
-	
-		yMotorScanStepSize = float(yScanStepSize.text())
-		yMotorScanStartPos = float(yScanStartPos.text())
-		yMotorScanStopPos = float(yScanStopPos.text())
-					
-		#Inner scan (scanX) needs to be treated differently in order to handle
-		#snake scans where the start/stop/step are changed for each line. By 
-		#setting start to the min of actual start and stop (and similarly for 
-		#the start) and taking the abs. value of step, the coordinate system
-		#is kept unambiguous.
-		scanX_info = [min([xMotorScanStartPos, xMotorScanStopPos]), 
-					  max([xMotorScanStartPos, xMotorScanStopPos]), 
-					  abs(xMotorScanStepSize)]
-		scanY_info = [yMotorScanStartPos, yMotorScanStopPos, yMotorScanStepSize]
-
-		# Convert mouse click position into sample spatial position
-		chosenX = self.mouse_to_spacial(mouseX_info, imageX_pos, scanX_info)
-		chosenY = self.mouse_to_spacial(mouseY_info, imageY_pos, scanY_info)
-
-		# Check that clicked position is within scan limits and if so, 
-		# "discretize" position so that it matches up with actual positions of
-		# sample during scan and then send to motor's set entry field
-		xLimits	= [scanX_info[0], scanX_info[1] + scanX_info[2]]		
-		yLimits = [scanY_info[0], scanY_info[1] + scanY_info[2]]
-		if ((chosenY <= max(yLimits)) and (chosenY >= min(yLimits)) and (chosenX <= max(xLimits)) and (chosenX >= min(xLimits))):
-				chosenX_disc = self.discretize_pos(chosenX, scanX_info[0], scanX_info[2])
-				chosenY_disc = self.discretize_pos(chosenY, yMotorScanStartPos, yMotorScanStepSize)
-				self.motorSetObj[2].setText(str(chosenX_disc))
-				self.motorSetObj[1].setText(str(chosenY_disc))
-
-
-# Starting to write a single get_coord function, will require
-
 	def get_coord_xy(self, event):
 		# Get x coordinate of mouse-click for XY Scan
-		get_coord(self, event, self.scans[1])   
+		self.get_coord(event, self.scans[1])   
 		# Get y coordinate of mouse-click for XY Scan
-		get_coord(self, event, self.scans[2])	
+		self.get_coord(event, self.scans[2])	
 	
 	def get_coord_beta(self, event):
 		# Get beta coordinate of mouse-click for Beta Scan
-		get_coord(self, event, self.scans[0])	
+		self.get_coord(event, self.scans[0])	
 	
 	def get_coord(self, event, scan):
 		scanType = scan["ViewType"]
-		scanAxes = scan["Axes"]
+		scanAxis = scan["Axis"]
 		scanControls = scan["Controls"]
+		axisIndex = scan["AxisIndex"]
 		zoomedSize = scan['ZoomedSize']
-		
-		# Get mouse click position in imageView widget
+	
+		# Get mouse click position in imageView widget and set viewIndex
 		imageViewer = self.ui.findChild(PyDMImageView,scanType)
-		if scanAxes = 'Y':
+		if scanAxis == 'Y':
 			mouse_info = [float(event.pos().y()), imageViewer.height()]
-		else
+			viewIndex = 1
+		else:
 			mouse_info = [float(event.pos().x()), imageViewer.width()]
-			
+			viewIndex = 0
 		# Image boundaries returned as [[xmin, xmax], [ymin, ymax]]
 		view = imageViewer.getView()
 		vRange = view.viewRange()
-		image_pos = [float(vRange[1][0]), float(vRange[1][1]), zoomedSize]   # <---- TODO generalize indices 
+		image_pos = [float(vRange[viewIndex][0]), float(vRange[viewIndex][1]), zoomedSize]   # <---- TODO generalize indices 
 		
 		# Get Scan information
 		scanEmbeddedDisplay = self.ui.findChild(PyDMEmbeddedDisplay,scanControls)
@@ -245,6 +156,6 @@ class LiveScan(Display):
 		limits = [motorScanStartPos, motorScanStopPos + motorScanStepSize]
 		if ((chosenPos <= max(limits)) and (chosenPos >= min(limits))):
 				chosenPos_disc = self.discretize_pos(chosenPos, motorScanStartPos, motorScanStepSize)
-				self.motorSetObj[0].setText(str(chosenPos_disc))			# <---- TODO generalize motorSetObj
+				self.motorSetObj[axisIndex].setText(str(chosenPos_disc))			# <---- TODO generalize motorSetObj
 	
 	
